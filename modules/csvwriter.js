@@ -1,18 +1,19 @@
 /**
  * Module for writing data into specified csv file
+ * @author Kyrylo Boiarkin
  */
-
 var csv = require('fast-csv');
 var fs = require('fs');
 var async = require('async');
 
 /**
- * Writing data into file with fileName
+ * Writing data into file fileName
  * @param {array} data - data to be written
  * @param {string} fileName - name of the file where data will be written
  * @param {function} callback - will be called in the end with one argument (err)
  */
 module.exports = function(data, fileName, callback) {
+  // creating streams for csv data and file that will accept csv data
   var csvStream = csv.createWriteStream({headers: true});
   var writableStream = fs.createWriteStream(fileName);
   
@@ -27,18 +28,15 @@ module.exports = function(data, fileName, callback) {
     // iterating through the data in an async way one by one
     async.eachSeries(data, function(item, iterationCallback){
       if ( item ) {
-	console.log('writing data:', item);
 	// writing data row to the file through csv streams
 	csvStream.write(item);
       }
       iterationCallback();
     }, function(err){
-      console.log('iterations finished');
       // closing scv stream
       csvStream.end();
       // executing callback only after write to file is finished
       writableStream.on("finish", function(){
-	console.log('file write finished');
 	callback(err);
       });      
     });

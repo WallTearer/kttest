@@ -1,7 +1,7 @@
 /**
  * Module for loading users from facebook that have ids between minId and maxId
+ * @author Kyrylo Boiarkin
  */
-
 var async = require('async');
 var fb = require('fb');
 
@@ -12,7 +12,6 @@ var fb = require('fb');
  * @param {function} callback - will be called with 2 arguments (err, users)
  */
 module.exports = function (minId, maxId, callback) {
-  
   var currentId = minId;
   var processedIdsCount = 0;
   var loadedUsers = [];
@@ -39,8 +38,10 @@ module.exports = function (minId, maxId, callback) {
       currentId++;
       iterationCallback();
     },
-    function() {
-      // well, loop has ended, nothing to do here. This callback is required by async.whilst
+    function(err) {
+      // if we got an error, triggering callback with an error
+      if ( err )
+	return callback(err);
     }
   );
 };
