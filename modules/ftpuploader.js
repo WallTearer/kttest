@@ -5,6 +5,7 @@
 var ftp = require('ftp');
 var fs = require('fs');
 var path = require('path');
+var config = require('./../config/config');
 
 /**
  * Upload file fileName to the ftp server
@@ -32,7 +33,5 @@ module.exports = function(fileName, callback) {
     return callback(err);
   });
   // connect to ftp server
-  ftpClient.connect({
-    
-  });
+  ftpClient.connect(config.ftp);
 };
