@@ -28,7 +28,7 @@ module.exports = function (minId, maxId, callback) {
 	processedIdsCount++;
 
 	if ( res && !res.error )
-	  loadedUsers[res.id] = { id: res.id, name: res.name };
+	  loadedUsers[res.id] = [res.id, res.name];
 
 	// if all users are loaded, returning them
 	if ( processedIdsCount === (maxId - minId + 1) ) {
