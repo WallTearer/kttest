@@ -7,6 +7,7 @@ module.exports = {
   minUserId: 1,
   maxUserId: 30,
   filePath: '/tmp/kyryloboiarkin_fbusers.csv',
+  silentLogger: false,
   ftp: {
     host: '',
     port: 21,
